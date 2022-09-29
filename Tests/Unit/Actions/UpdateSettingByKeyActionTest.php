@@ -36,7 +36,8 @@ class UpdateSettingByKeyActionTest extends TestCase
             'key' => $settings->key,
             'value' => [
                 'total' => 22
-            ]
+            ],
+            'type' => Setting::TYPE_DATA
         ]);
 
         $result = app(UpdateSettingByKeyAction::class)->run($dto);
