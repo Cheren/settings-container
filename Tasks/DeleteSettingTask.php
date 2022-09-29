@@ -1,28 +1,37 @@
 <?php
 
+/**
+ * APIATO setting container.
+ *
+ * This file is part of the APIATO setting container.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    Proprietary
+ * @copyright  Copyright (C) kalistratov.ru, All rights reserved.
+ * @link       https://kalistratov.ru
+ */
+
 namespace App\Containers\Vendor\Settings\Tasks;
 
-use App\Containers\Vendor\Settings\Data\Repositories\SettingRepository;
-use App\Containers\Vendor\Settings\Models\Setting;
 use App\Ship\Exceptions\DeleteResourceFailedException;
-use App\Ship\Parents\Tasks\Task;
 use Exception;
 
-class DeleteSettingTask extends Task
+class DeleteSettingTask extends SettingTask
 {
-    protected SettingRepository $repository;
-
-    public function __construct(SettingRepository $repository)
-    {
-        $this->repository = $repository;
-    }
-
-    public function run(Setting $setting): ?int
+    /**
+     * @param string $key
+     * @return int|null
+     * @throws DeleteResourceFailedException
+     */
+    public function run(string $key): ?int
     {
         try {
-            return $this->repository->delete($setting->id);
+            return $this->repository->deleteWhere([
+                ['key', '=', $key]
+            ]);
         } catch (Exception $exception) {
-            throw new DeleteResourceFailedException();
+            throw new DeleteResourceFailedException($exception->getMessage());
         }
     }
 }

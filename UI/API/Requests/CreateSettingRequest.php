@@ -1,46 +1,55 @@
 <?php
 
+/**
+ * APIATO setting container.
+ *
+ * This file is part of the APIATO setting container.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    Proprietary
+ * @copyright  Copyright (C) kalistratov.ru, All rights reserved.
+ * @link       https://kalistratov.ru
+ */
+
 namespace App\Containers\Vendor\Settings\UI\API\Requests;
 
-use App\Ship\Parents\Requests\Request;
+use App\Containers\Vendor\Settings\Models\Setting;
+use App\Containers\Vendor\Settings\Requests\ApiSettingRequest;
+use App\Ship\Parents\Validation\Rule;
 
-class CreateSettingRequest extends Request
+class CreateSettingRequest extends ApiSettingRequest
 {
-    /**
-     * Define which Roles and/or Permissions has access to this request.
-     */
-    protected array $access = [
-        'permissions' => '',
-        'roles' => 'admin',
-    ];
-
-    /**
-     * Id's that needs decoding before applying the validation rules.
-     */
-    protected array $decode = [
-        // 'id',
-    ];
-
-    /**
-     * Defining the URL parameters (e.g, `/user/{id}`) allows applying
-     * validation rules on them and allows accessing them like request data.
-     */
-    protected array $urlParameters = [
-        //'id',
-    ];
-
     public function rules(): array
     {
         return [
-            'key' => 'required|string|max:190',
-            'value' => 'required|string|max:190',
+            'key' => Rule::addRequiredRule(config('vendor-settings.rules.key')),
+            'value' => $this->getValueRule(),
+            'type' => config('vendor-settings.rules.type')
         ];
     }
 
-    public function authorize(): bool
+    protected function getValueRule(): array
     {
-        return $this->check([
-            'hasAccess',
-        ]);
+        $rules = Rule::addRequiredRule([]);
+
+        if ($this->inputTypeIs(Setting::TYPE_DATA)) {
+            $rules[] = 'array';
+        } elseif ($this->inputTypeIs(Setting::TYPE_INT)) {
+            $rules[] = 'numeric';
+        } else {
+            $rules[] = 'string';
+        }
+
+        return $rules;
+    }
+
+    protected function prepareForValidation(): void
+    {
+        if (!$this->has('type')) {
+            $this->merge([
+                'type' => Setting::TYPE_STRING
+            ]);
+        }
     }
 }

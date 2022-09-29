@@ -1,28 +1,37 @@
 <?php
 
+/**
+ * APIATO setting container.
+ *
+ * This file is part of the APIATO setting container.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    Proprietary
+ * @copyright  Copyright (C) kalistratov.ru, All rights reserved.
+ * @link       https://kalistratov.ru
+ */
+
 namespace App\Containers\Vendor\Settings\Tasks;
 
-use App\Containers\Vendor\Settings\Data\Repositories\SettingRepository;
+use App\Containers\Vendor\Settings\Dto\SettingsDto;
 use App\Containers\Vendor\Settings\Models\Setting;
 use App\Ship\Exceptions\CreateResourceFailedException;
-use App\Ship\Parents\Tasks\Task;
 use Exception;
 
-class CreateSettingTask extends Task
+class CreateSettingTask extends SettingTask
 {
-    protected SettingRepository $repository;
-
-    public function __construct(SettingRepository $repository)
-    {
-        $this->repository = $repository;
-    }
-
-    public function run(array $data): Setting
+    /**
+     * @param SettingsDto $dto
+     * @return Setting
+     * @throws CreateResourceFailedException
+     */
+    public function run(SettingsDto $dto): Setting
     {
         try {
-            return $this->repository->create($data);
+            return $this->repository->create($dto->toArray());
         } catch (Exception $exception) {
-            throw new CreateResourceFailedException();
+            throw new CreateResourceFailedException($exception->getMessage());
         }
     }
 }

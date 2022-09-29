@@ -1,47 +1,26 @@
 <?php
 
+/**
+ * APIATO setting container.
+ *
+ * This file is part of the APIATO setting container.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    Proprietary
+ * @copyright  Copyright (C) kalistratov.ru, All rights reserved.
+ * @link       https://kalistratov.ru
+ */
+
 namespace App\Containers\Vendor\Settings\UI\API\Requests;
 
-use App\Ship\Parents\Requests\Request;
-
-class UpdateSettingRequest extends Request
+class UpdateSettingRequest extends CreateSettingRequest
 {
-    /**
-     * Define which Roles and/or Permissions has access to this request.
-     */
-    protected array $access = [
-        'permissions' => '',
-        'roles' => 'admin',
-    ];
-
-    /**
-     * Id's that needs decoding before applying the validation rules.
-     */
-    protected array $decode = [
-        'id',
-    ];
-
-    /**
-     * Defining the URL parameters (e.g, `/user/{id}`) allows applying
-     * validation rules on them and allows accessing them like request data.
-     */
-    protected array $urlParameters = [
-        'id',
-    ];
-
-    public function rules(): array
-    {
-        return [
-            'id' => 'required|exists:settings,id',
-            'key' => 'sometimes|string|max:190',
-            'value' => 'sometimes|string|max:190',
-        ];
-    }
-
     public function authorize(): bool
     {
         return $this->check([
             'hasAccess',
+            'isOwner'
         ]);
     }
 }

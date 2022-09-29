@@ -1,23 +1,53 @@
 <?php
 
+/**
+ * APIATO setting container.
+ *
+ * This file is part of the APIATO setting container.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    Proprietary
+ * @copyright  Copyright (C) kalistratov.ru, All rights reserved.
+ * @link       https://kalistratov.ru
+ */
+
 namespace App\Containers\Vendor\Settings\Tasks;
 
-use App\Containers\Vendor\Settings\Data\Repositories\SettingRepository;
+use App\Containers\Vendor\Settings\Dto\SettingsDto;
+use App\Containers\Vendor\Settings\Models\Setting;
 use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Exceptions\UpdateResourceFailedException;
-use App\Ship\Parents\Tasks\Task;
 use Exception;
 
-class UpdateSettingsByKeyTask extends Task
+class UpdateSettingsByKeyTask extends SettingTask
 {
-    protected SettingRepository $repository;
-
-    public function __construct(SettingRepository $repository)
+    /**
+     * @param SettingsDto $dto
+     * @return Setting
+     * @throws NotFoundException
+     * @throws UpdateResourceFailedException
+     */
+    public function run(SettingsDto $dto): Setting
     {
-        $this->repository = $repository;
+        $setting = $this->findSetting($dto->key);
+
+        try {
+            return $this->repository->update([
+                'value' => $dto->value,
+                'type' => $dto->type
+            ], $setting->id);
+        } catch (Exception $exception) {
+            throw new UpdateResourceFailedException();
+        }
     }
 
-    public function run($key, $value)
+    /**
+     * @param string $key
+     * @return Setting
+     * @throws NotFoundException
+     */
+    protected function findSetting(string $key): Setting
     {
         $setting = $this->repository->findWhere(['key' => $key])->first();
 
@@ -25,12 +55,6 @@ class UpdateSettingsByKeyTask extends Task
             throw new NotFoundException();
         }
 
-        try {
-            return $this->repository->update([
-                'value' => $value
-            ], $setting->id);
-        } catch (Exception $exception) {
-            throw new UpdateResourceFailedException();
-        }
+        return $setting;
     }
 }
