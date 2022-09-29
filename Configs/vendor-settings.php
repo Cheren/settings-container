@@ -25,7 +25,8 @@ return [
     'rules' => [
 
         'key' => [
-            'string'
+            'string',
+            'unique:' . Setting::TABLE . ',key'
         ],
 
         'type' => [

@@ -14,6 +14,9 @@
 
 namespace App\Containers\Vendor\Settings\UI\API\Requests;
 
+use App\Containers\Vendor\Settings\Models\Setting;
+use App\Ship\Parents\Validation\Rule;
+
 class UpdateSettingRequest extends CreateSettingRequest
 {
     public function authorize(): bool
@@ -22,5 +25,17 @@ class UpdateSettingRequest extends CreateSettingRequest
             'hasAccess',
             'isOwner'
         ]);
+    }
+
+    protected function getKeyRules(): array
+    {
+        $rules = parent::getKeyRules();
+        foreach ($rules as $i => $rule) {
+            if (preg_match('/^unique:/', $rule)) {
+                $rules[$i] = Rule::unique(Setting::TABLE, 'key')->ignore($this->key, 'key');
+            }
+        }
+
+        return $rules;
     }
 }

@@ -23,10 +23,15 @@ class CreateSettingRequest extends ApiSettingRequest
     public function rules(): array
     {
         return [
-            'key' => Rule::addRequiredRule(config('vendor-settings.rules.key')),
+            'key' => $this->getKeyRules(),
             'value' => $this->getValueRule(),
             'type' => config('vendor-settings.rules.type')
         ];
+    }
+
+    protected function getKeyRules(): array
+    {
+        return Rule::addRequiredRule(config('vendor-settings.rules.key'));
     }
 
     protected function getValueRule(): array
