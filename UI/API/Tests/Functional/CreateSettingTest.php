@@ -56,11 +56,11 @@ class CreateSettingTest extends ApiTestCase
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
 
         $this->assertResponseContainKeyValue([
-            'message' => 'The given data was invalid.'
+            'message' => __('ship::exception.message.given_data_was_invalid')
         ]);
 
         $this->assertValidationErrorContain([
-            'type' => 'The selected type is invalid.'
+            'message' => __('ship::exception.message.given_data_was_invalid')
         ]);
     }
 

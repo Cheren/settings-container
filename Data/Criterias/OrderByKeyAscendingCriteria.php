@@ -15,10 +15,17 @@
 namespace App\Containers\Vendor\Settings\Data\Criterias;
 
 use App\Ship\Parents\Criterias\Criteria;
+use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterface;
 
 class OrderByKeyAscendingCriteria extends Criteria
 {
+    /**
+     * @param Builder $model
+     * @param PrettusRepositoryInterface $repository
+     * @return Builder
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function apply($model, PrettusRepositoryInterface $repository)
     {
         return $model->orderBy('key', 'asc');
