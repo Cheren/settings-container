@@ -60,7 +60,7 @@ class CreateSettingTest extends ApiTestCase
         ]);
 
         $this->assertValidationErrorContain([
-            'message' => __('ship::exception.message.given_data_was_invalid')
+            'type' => 'The selected type is invalid.'
         ]);
     }
 
