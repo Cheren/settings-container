@@ -26,7 +26,7 @@ class FindSettingByKeyAction extends Action
      * @return int|JSON|string
      * @throws NotFoundException
      */
-    public function run(string $key)
+    public function run(string $key): int|JSON|string
     {
         return app(FindSettingByKeyTask::class)->run($key);
     }
