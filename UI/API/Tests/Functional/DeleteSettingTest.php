@@ -29,7 +29,7 @@ class DeleteSettingTest extends ApiTestCase
         'roles' => [
             'admin'
         ],
-        'permissions' => SettingsPermissions::CRUD
+        'permissions' => SettingsPermissions::MANAGE_SETTINGS
     ];
 
     public function testWithNoRoleAndPermissions(): void
@@ -51,7 +51,7 @@ class DeleteSettingTest extends ApiTestCase
         $user = $this->getTestingUser(null, [
             'roles' => [],
             'permissions' => [
-                SettingsPermissions::CRUD
+                SettingsPermissions::MANAGE_SETTINGS
             ]
         ]);
 
@@ -75,7 +75,7 @@ class DeleteSettingTest extends ApiTestCase
         $this->getTestingUser(null, [
             'roles' => [],
             'permissions' => [
-                SettingsPermissions::CRUD
+                SettingsPermissions::MANAGE_SETTINGS
             ]
         ]);
 

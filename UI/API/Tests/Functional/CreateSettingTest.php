@@ -26,7 +26,7 @@ class CreateSettingTest extends ApiTestCase
         'roles' => [
             'admin'
         ],
-        'permissions' => SettingsPermissions::CRUD
+        'permissions' => SettingsPermissions::MANAGE_SETTINGS
     ];
 
     public function testWithNoRoleAndPermissions(): void

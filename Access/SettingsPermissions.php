@@ -14,7 +14,39 @@
 
 namespace App\Containers\Vendor\Settings\Access;
 
-class SettingsPermissions
+use App\Containers\AppSection\Authorization\Dto\CreatePermissionDto;
+use App\Ship\Access\Permission;
+use Illuminate\Support\Collection;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
+
+class SettingsPermissions extends Permission
 {
-    public const CRUD = 'crud-settings';
+    public const MANAGE_SETTINGS = 'vendor-settings-manage-settings';
+
+    /**
+     * @return Collection
+     * @throws UnknownProperties
+     */
+    public function getList(): Collection
+    {
+        return collect([
+            new CreatePermissionDto([
+                'name' => self::MANAGE_SETTINGS,
+                'section' => $this->getSection(),
+                'container' => $this->getContainer(),
+                'display_name' => $this->getTranslateKey('manage_settings.name'),
+                'description' => $this->getTranslateKey('manage_settings.description')
+            ])
+        ]);
+    }
+
+    public function getSection(): string
+    {
+        return 'vendor';
+    }
+
+    public function getContainer(): string
+    {
+        return 'settings';
+    }
 }

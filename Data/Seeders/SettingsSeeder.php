@@ -14,34 +14,28 @@
 
 namespace App\Containers\Vendor\Settings\Data\Seeders;
 
+use App\Containers\AppSection\Authorization\Dto\CreatePermissionDto;
 use App\Containers\AppSection\Authorization\Tasks\CreatePermissionTask;
 use App\Containers\Vendor\Settings\Access\SettingsPermissions;
 use App\Ship\Parents\Seeders\Seeder;
 use App\Ship\Exceptions\CreateResourceFailedException;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class SettingsSeeder extends Seeder
 {
     /**
+     * @return void
      * @throws CreateResourceFailedException
+     * @throws UnknownProperties
      */
     public function run(): void
     {
-        $this->createPermissions();
-    }
-
-    /**
-     * @return $this
-     * @throws CreateResourceFailedException
-     */
-    protected function createPermissions(): self
-    {
         $createPermissionTask = app(CreatePermissionTask::class);
 
-        $createPermissionTask->run(
-            SettingsPermissions::CRUD,
-            __('vendor@settings::settings.permission.crud')
-        );
-
-        return $this;
+        (new SettingsPermissions())
+            ->getList()
+            ->each(function (CreatePermissionDto $permissionDto) use ($createPermissionTask) {
+                $createPermissionTask->run($permissionDto);
+            });
     }
 }

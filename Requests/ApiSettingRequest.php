@@ -24,7 +24,7 @@ use App\Ship\Requests\ApiRequest;
 abstract class ApiSettingRequest extends ApiRequest
 {
     protected array $access = [
-        'permissions' => SettingsPermissions::CRUD,
+        'permissions' => SettingsPermissions::MANAGE_SETTINGS,
         'roles' => 'admin'
     ];
 

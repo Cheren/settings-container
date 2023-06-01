@@ -28,7 +28,7 @@ class UpdateSettingTest extends ApiTestCase
         'roles' => [
             'admin'
         ],
-        'permissions' => SettingsPermissions::CRUD
+        'permissions' => SettingsPermissions::MANAGE_SETTINGS
     ];
 
     public function testWithNoRoleAndPermissions(): void
@@ -50,7 +50,7 @@ class UpdateSettingTest extends ApiTestCase
         $this->getTestingUser(null, [
             'roles' => [],
             'permissions' => [
-                SettingsPermissions::CRUD
+                SettingsPermissions::MANAGE_SETTINGS
             ]
         ]);
 
@@ -78,7 +78,7 @@ class UpdateSettingTest extends ApiTestCase
         $this->getTestingUser(null, [
             'roles' => [],
             'permissions' => [
-                SettingsPermissions::CRUD
+                SettingsPermissions::MANAGE_SETTINGS
             ]
         ]);
 
