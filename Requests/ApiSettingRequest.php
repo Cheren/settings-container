@@ -16,15 +16,18 @@ namespace App\Containers\Vendor\Settings\Requests;
 
 use App\Containers\Vendor\Settings\Access\SettingsPermissions;
 use App\Containers\Vendor\Settings\Models\Setting;
+use App\Containers\Vendor\Settings\UI\API\Transformers\SettingTransformer;
+use App\Ship\Contracts\GettableTransformer;
+use App\Ship\Parents\Transformers\Transformer;
 use App\Ship\Requests\ApiRequest;
 
 /**
  * @property mixed $key
  */
-abstract class ApiSettingRequest extends ApiRequest
+abstract class ApiSettingRequest extends ApiRequest implements GettableTransformer
 {
     protected array $access = [
-        'permissions' => SettingsPermissions::MANAGE_SETTINGS,
+        //'permissions' => SettingsPermissions::MANAGE_SETTINGS,
         'roles' => 'admin'
     ];
 
@@ -33,6 +36,11 @@ abstract class ApiSettingRequest extends ApiRequest
         return $this->check([
             'hasAccess'
         ]);
+    }
+
+    public function getTransformer(): Transformer
+    {
+        return new SettingTransformer();
     }
 
     protected function inputTypeIs(string $type): bool

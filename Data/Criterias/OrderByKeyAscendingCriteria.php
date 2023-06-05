@@ -18,7 +18,7 @@ use App\Ship\Parents\Criterias\Criteria;
 use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterface;
 
-class OrderByKeyAscendingCriteria extends Criteria
+final class OrderByKeyAscendingCriteria extends Criteria
 {
     /**
      * @param Builder $model
