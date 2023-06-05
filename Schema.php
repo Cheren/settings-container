@@ -26,11 +26,16 @@ abstract class Schema implements Namebled
         return $this->key;
     }
 
-    public function valueWithTitle(?string $title, mixed $value, string $type = 'string'): array
-    {
+    public function setValue(
+        ?string $title,
+        mixed $value,
+        string $type = 'string',
+        ?string $hint = null
+    ): array {
         return [
             'value' => $value,
             'title' => $title,
+            'hint' => $hint,
             'type' => $type
         ];
     }
