@@ -20,6 +20,18 @@ use App\Ship\Parents\Validation\Rule;
 
 class CreateSettingRequest extends ApiSettingRequest
 {
+    public function authorize(): bool
+    {
+        if ($this->isUserScreenSettings()) {
+            $this->access = [
+                'permissions' => '',
+                'roles' => ''
+            ];
+        }
+
+        return parent::authorize();
+    }
+
     public function rules(): array
     {
         return [
@@ -27,6 +39,12 @@ class CreateSettingRequest extends ApiSettingRequest
             'value' => $this->getValueRule(),
             'type' => config('vendor-settings.rules.type')
         ];
+    }
+
+    protected function isUserScreenSettings(): bool
+    {
+        $key = $this->get('key');
+        return (bool)preg_match('/^user\.#[0-9]\.screen\.[0-9a-z_]/', $key);
     }
 
     protected function getKeyRules(): array

@@ -29,8 +29,8 @@ abstract class Schema implements Namebled
     public function setValue(
         ?string $title,
         mixed $value,
-        string $type = 'string',
-        ?string $hint = null
+        ?string $hint = null,
+        string $type = 'string'
     ): array {
         return [
             'value' => $value,
