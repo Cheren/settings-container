@@ -21,6 +21,13 @@ class UpdateSettingRequest extends CreateSettingRequest
 {
     public function authorize(): bool
     {
+        if ($this->isUserScreenSettings()) {
+            $this->access = [
+                'permissions' => '',
+                'roles' => ''
+            ];
+        }
+
         return $this->check([
             'hasAccess',
             'isOwner'
