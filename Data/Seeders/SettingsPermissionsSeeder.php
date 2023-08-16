@@ -21,7 +21,7 @@ use App\Ship\Parents\Seeders\Seeder;
 use App\Ship\Exceptions\CreateResourceFailedException;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
-class SettingsSeeder extends Seeder
+class SettingsPermissionsSeeder extends Seeder
 {
     /**
      * @return void

@@ -15,7 +15,10 @@
 
 namespace App\Containers\Vendor\Settings;
 
+use App\Containers\Vendor\Settings\Dto\SettingsDto;
 use App\Ship\Contracts\Namebled;
+use JBZoo\Data\JSON;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 abstract class Schema implements Namebled
 {
@@ -41,4 +44,31 @@ abstract class Schema implements Namebled
     }
 
     abstract public function transformValue(mixed $value): mixed;
+
+    /**
+     * @param string|null $key
+     * @return JSON|null|int|array|string
+     */
+    public function get(?string $key = null): mixed
+    {
+        static $settings;
+        if (is_null($settings)) {
+            $settings = settings($this->getKey(), new JSON());
+        }
+
+        return is_null($key) ? $settings : $settings->find($key);
+    }
+
+    /**
+     * @return SettingsDto
+     * @throws UnknownProperties
+     */
+    public function seederSettings(): SettingsDto
+    {
+        return new SettingsDto([
+            'key' => 'default_key',
+            'value' => '{}',
+            'type' => 'data'
+        ]);
+    }
 }
