@@ -33,14 +33,21 @@ abstract class Schema implements Namebled
         ?string $title,
         mixed $value,
         ?string $hint = null,
-        string $type = 'string'
+        string $type = 'string',
+        array $options = []
     ): array {
-        return [
+        $data =  [
             'value' => $value,
             'title' => $title,
             'hint' => $hint,
             'type' => $type
         ];
+
+        if (count($options)) {
+            $data['options'] = $options;
+        }
+
+        return $data;
     }
 
     abstract public function transformValue(mixed $value): mixed;
