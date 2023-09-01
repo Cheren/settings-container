@@ -22,6 +22,9 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 abstract class Schema implements Namebled
 {
+    public const TYPE_INPUT = 'input';
+    public const TYPE_LIST = 'list';
+
     protected string $key;
 
     public function getKey(): string
@@ -33,7 +36,7 @@ abstract class Schema implements Namebled
         ?string $title,
         mixed $value,
         ?string $hint = null,
-        string $type = 'string',
+        string $type = self::TYPE_INPUT,
         array $options = []
     ): array {
         $data =  [
