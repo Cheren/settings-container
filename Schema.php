@@ -23,6 +23,7 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 abstract class Schema implements Namebled
 {
     public const TYPE_INPUT = 'input';
+    public const TYPE_LINK = 'link';
     public const TYPE_LIST = 'list';
 
     protected string $key;
