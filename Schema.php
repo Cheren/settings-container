@@ -22,6 +22,7 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 abstract class Schema implements Namebled
 {
+    public const TYPE_SEPARATOR = 'separator';
     public const TYPE_INPUT = 'input';
     public const TYPE_LINK = 'link';
     public const TYPE_LIST = 'list';
@@ -58,16 +59,17 @@ abstract class Schema implements Namebled
 
     /**
      * @param string|null $key
-     * @return JSON|null|int|array|string
+     * @param mixed|null $default
+     * @return mixed
      */
-    public function get(?string $key = null): mixed
+    public function get(?string $key = null, mixed $default = null): mixed
     {
         static $settings;
         if (is_null($settings)) {
             $settings = settings($this->getKey(), new JSON());
         }
 
-        return is_null($key) ? $settings : $settings->find($key);
+        return is_null($key) ? $settings : $settings->find($key, $default);
     }
 
     /**
