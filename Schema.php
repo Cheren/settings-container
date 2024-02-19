@@ -85,4 +85,15 @@ abstract class Schema implements Namebled
             'type' => 'data'
         ]);
     }
+
+    protected function getListValue(mixed $value, array $optionList): array
+    {
+        $optionList = collect($optionList);
+
+        return (array)$optionList
+            ->first(function (array $option) use ($value) {
+                $option = collect($option);
+                return $option->get(VALUE) === $value;
+            });
+    }
 }
