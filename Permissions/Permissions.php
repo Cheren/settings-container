@@ -12,14 +12,15 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Access;
+namespace App\Containers\Vendor\Settings\Permissions;
 
 use App\Containers\AppSection\Authorization\Dto\CreatePermissionDto;
+use App\Containers\Vendor\Settings\Facades\Container;
 use App\Ship\Access\Permission;
 use Illuminate\Support\Collection;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
-class SettingsPermissions extends Permission
+final class Permissions extends Permission
 {
     public const MANAGE_SETTINGS = 'vendor-settings-manage-settings';
 
@@ -42,11 +43,16 @@ class SettingsPermissions extends Permission
 
     public function getSection(): string
     {
-        return 'vendor';
+        return Container::getSectionName();
     }
 
     public function getContainer(): string
     {
-        return 'settings';
+        return Container::getSectionName();
+    }
+
+    public function getSchemaAccessor(): ?string
+    {
+        return PermissionsSchema::class;
     }
 }

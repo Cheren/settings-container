@@ -15,7 +15,7 @@
 namespace App\Containers\Vendor\Settings\UI\API\Tests\Functional;
 
 use App\Containers\AppSection\User\Models\User;
-use App\Containers\Vendor\Settings\Access\SettingsPermissions;
+use App\Containers\Vendor\Settings\Permissions\Permissions;
 use App\Containers\Vendor\Settings\Models\Setting;
 use App\Containers\Vendor\Settings\Tests\ApiTestCase;
 use Illuminate\Http\Response;
@@ -28,7 +28,7 @@ class UpdateSettingTest extends ApiTestCase
         'roles' => [
             'admin'
         ],
-        'permissions' => SettingsPermissions::MANAGE_SETTINGS
+        'permissions' => Permissions::MANAGE_SETTINGS
     ];
 
     public function testWithNoRoleAndPermissions(): void
@@ -50,7 +50,7 @@ class UpdateSettingTest extends ApiTestCase
         $this->getTestingUser(null, [
             'roles' => [],
             'permissions' => [
-                SettingsPermissions::MANAGE_SETTINGS
+                Permissions::MANAGE_SETTINGS
             ]
         ]);
 
@@ -78,7 +78,7 @@ class UpdateSettingTest extends ApiTestCase
         $this->getTestingUser(null, [
             'roles' => [],
             'permissions' => [
-                SettingsPermissions::MANAGE_SETTINGS
+                Permissions::MANAGE_SETTINGS
             ]
         ]);
 

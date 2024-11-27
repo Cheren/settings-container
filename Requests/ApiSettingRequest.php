@@ -14,7 +14,7 @@
 
 namespace App\Containers\Vendor\Settings\Requests;
 
-use App\Containers\Vendor\Settings\Access\SettingsPermissions;
+use App\Containers\Vendor\Settings\Permissions\Permissions;
 use App\Containers\Vendor\Settings\Models\Setting;
 use App\Containers\Vendor\Settings\UI\API\Transformers\SettingTransformer;
 use App\Ship\Contracts\GettableTransformer;

@@ -14,7 +14,7 @@
 
 namespace App\Containers\Vendor\Settings\UI\API\Tests\Functional;
 
-use App\Containers\Vendor\Settings\Access\SettingsPermissions;
+use App\Containers\Vendor\Settings\Permissions\Permissions;
 use App\Containers\Vendor\Settings\Tests\ApiTestCase;
 use Illuminate\Http\Response;
 
@@ -26,7 +26,7 @@ class CreateSettingTest extends ApiTestCase
         'roles' => [
             'admin'
         ],
-        'permissions' => SettingsPermissions::MANAGE_SETTINGS
+        'permissions' => Permissions::MANAGE_SETTINGS
     ];
 
     public function testWithNoRoleAndPermissions(): void
