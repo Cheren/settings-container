@@ -53,6 +53,6 @@ final class Permissions extends Permission
 
     public function getSchemaAccessor(): ?string
     {
-        return PermissionsSchema::class;
+        return Schema::class;
     }
 }
