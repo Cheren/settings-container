@@ -13,24 +13,25 @@
  * @author      Sergey Kalistratov <sergey@kalistratov.ru>
  */
 
-namespace App\Containers\Vendor\Settings\UI\API\Transformers;
+namespace App\Containers\Vendor\Setting\UI\API\Transformers;
 
-use App\Containers\Vendor\Settings\Manager;
-use App\Containers\Vendor\Settings\Models\Setting;
+use App\Containers\Vendor\Setting\Foundation\Setting;
+use App\Containers\Vendor\Setting\Manager;
+use App\Containers\Vendor\Setting\Models\Setting as SettingModel;
 use App\Ship\Parents\Transformers\Transformer;
 
 class SystemSettingsTransformer extends Transformer
 {
-    public function transform(Setting $setting): array
+    public function transform(SettingModel $setting): array
     {
         $manager = Manager::getInstance();
         $settingSchema = $manager->get($setting->key);
 
         return [
-            'key' => $setting->key,
-            'type' => $setting->type,
-            'title' => $settingSchema->getName(),
-            'value' => $settingSchema->transformValue($setting->value)
+            Setting::KEY => $setting->key,
+            Setting::TYPE => $setting->type,
+            TITLE => $settingSchema->getName(),
+            VALUE => $settingSchema->transformValue($setting->value)
         ];
     }
 }

@@ -12,14 +12,14 @@
  * @link        https://kalistratov.ru
  * @author      Sergey Kalistratov <sergey@kalistratov.ru>
  *
- * @apiGroup           Settings
- * @apiName            getSystemSettings
+ * @apiGroup Setting
+ * @apiName getSystemSettings
  *
- * @api                {GET} /v1/settings/system Список настроек системы
- * @apiDescription     Получить список настроек системы.
+ * @api {get} /v1/settings/system Список настроек системы
+ * @apiDescription Получить список настроек системы.
  *
- * @apiVersion         1.0.0
- * @apiPermission      Аутентифицированный пользователь
+ * @apiVersion 1.0.0
+ * @apiPermission Аутентифицированный пользователь (Администратор)
  *
  * @apiExample {js} NodeJS Axios:
 const axios = require('axios');
@@ -37,7 +37,7 @@ let config = {
 
 axios(config);
  *
- * @apiSuccessExample  {json} Успешный ответ:
+ * @apiSuccessExample {json} Успешный ответ:
  * HTTP/1.1 200 OK
 {
     "data": [
@@ -76,9 +76,10 @@ axios(config);
 }
  */
 
-use App\Containers\Vendor\Settings\UI\API\Controllers\Controller;
+use App\Containers\Vendor\Setting\Facades\Container;
+use App\Containers\Vendor\Setting\UI\API\Controllers\GetSystemSettingsController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('settings/system', [Controller::class, 'getSystemSettings'])
+Route::get(Container::getApiSystemUri(), GetSystemSettingsController::class)
     ->name('api_settings_get_system_settings')
     ->middleware(['auth:api']);

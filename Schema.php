@@ -13,9 +13,9 @@
  * @author      Sergey Kalistratov <sergey@kalistratov.ru>
  */
 
-namespace App\Containers\Vendor\Settings;
+namespace App\Containers\Vendor\Setting;
 
-use App\Containers\Vendor\Settings\Dto\SettingsDto;
+use App\Containers\Vendor\Setting\Dto\SettingsDto;
 use App\Ship\Contracts\Namebled;
 use JBZoo\Data\JSON;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;

@@ -12,11 +12,11 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Actions;
+namespace App\Containers\Vendor\Setting\Actions;
 
-use App\Containers\Vendor\Settings\Dto\SettingsDto;
-use App\Containers\Vendor\Settings\Models\Setting;
-use App\Containers\Vendor\Settings\Tasks\UpdateSettingsByKeyTask;
+use App\Containers\Vendor\Setting\Dto\SettingsDto;
+use App\Containers\Vendor\Setting\Models\Setting;
+use App\Containers\Vendor\Setting\Tasks\UpdateSettingsByKeyTask;
 use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Exceptions\UpdateResourceFailedException;
 use App\Ship\Parents\Actions\Action;

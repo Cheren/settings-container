@@ -12,9 +12,9 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Actions;
+namespace App\Containers\Vendor\Setting\Actions;
 
-use App\Containers\Vendor\Settings\Tasks\DeleteSettingTask;
+use App\Containers\Vendor\Setting\Tasks\DeleteSettingTask;
 use App\Ship\Exceptions\DeleteResourceFailedException;
 use App\Ship\Parents\Actions\Action;
 

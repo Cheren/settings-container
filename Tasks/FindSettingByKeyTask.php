@@ -12,8 +12,9 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Tasks;
+namespace App\Containers\Vendor\Setting\Tasks;
 
+use App\Containers\Vendor\Setting\Foundation\Setting;
 use App\Ship\Exceptions\NotFoundException;
 use JBZoo\Data\JSON;
 
@@ -24,9 +25,13 @@ class FindSettingByKeyTask extends SettingTask
      * @return string|int|JSON
      * @throws NotFoundException
      */
-    public function run(string $key)
+    public function run(string $key): string|int|JSON
     {
-        $result = $this->repository->findWhere(['key' => $key])->first();
+        $result = $this->repository
+            ->findWhere([
+                Setting::KEY => $key
+            ])
+            ->first();
 
         if (!$result) {
             throw new NotFoundException();

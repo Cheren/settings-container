@@ -13,10 +13,11 @@
  * @author      Sergey Kalistratov <sergey@kalistratov.ru>
  */
 
-namespace App\Containers\Vendor\Settings\Data\Criterias;
+namespace App\Containers\Vendor\Setting\Data\Criterias;
 
-use App\Containers\Vendor\Settings\Manager;
-use App\Containers\Vendor\Settings\Schema;
+use App\Containers\Vendor\Setting\Foundation\Setting;
+use App\Containers\Vendor\Setting\Manager;
+use App\Containers\Vendor\Setting\Schema;
 use App\Ship\Parents\Criterias\Criteria;
 use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterface;
@@ -41,6 +42,6 @@ final class IsSystemSettingsCriteria extends Criteria
                 $keys->add($settingSchema->getKey());
             });
 
-        return $model->whereIn('key', $keys->toArray());
+        return $model->whereIn(Setting::KEY, $keys->toArray());
     }
 }

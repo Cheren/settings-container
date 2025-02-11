@@ -12,21 +12,26 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Tests\Unit\Actions;
+namespace App\Containers\Vendor\Setting\Tests\Unit\Actions;
 
-use App\Containers\Vendor\Settings\Actions\GetAllSettingsAction;
-use App\Containers\Vendor\Settings\Models\Setting;
-use App\Containers\Vendor\Settings\Tests\TestCase;
+use App\Containers\Vendor\Setting\Actions\GetAllSettingsAction;
+use App\Containers\Vendor\Setting\Models\Setting;
+use App\Containers\Vendor\Setting\Tests\UnitTestCase;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class GetAllSettingsActionTest extends TestCase
+final class GetAllSettingsActionTest extends UnitTestCase
 {
     public function test(): void
     {
-        $total = 10;
-        Setting::factory()->count($total)->create();
+        $baseCount = Setting::count();
+
+        $settings = Setting::factory()
+            ->count(4)
+            ->create();
+
         $result = app(GetAllSettingsAction::class)->run();
+
         $this->assertInstanceOf(LengthAwarePaginator::class, $result);
-        $this->assertSame($total, $result->count());
+        $this->assertSame($settings->count() + $baseCount, $result->total());
     }
 }

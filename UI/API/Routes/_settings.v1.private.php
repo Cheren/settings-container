@@ -10,10 +10,21 @@
  * @license    Proprietary
  * @copyright  Copyright (C) kalistratov.ru, All rights reserved.
  * @link       https://kalistratov.ru
+ *
+ * @apiDefine SettingsSuccessSingleResponse
+ * @apiSuccessExample {json} Успешный ответ:
+HTTP/1.1 200 OK
+{
+    "data": {
+        "object": "Setting",
+        "id": "NxOpZowo9GmjKqdR",
+        "key": "user.#1.orders.table",
+        "value": "hello"
+    },
+    "meta": {
+        "include": [],
+        "custom": []
+    }
+}
  */
 
-namespace App\Containers\Vendor\Settings\Tests;
-
-class ApiTestCase extends TestCase
-{
-}

@@ -12,27 +12,10 @@
  * @link       https://kalistratov.ru
  */
 
-use App\Containers\Vendor\Settings\Models\Setting;
+namespace App\Containers\Vendor\Setting\Tests\Functional;
 
-$allowedTypes = [
-    Setting::TYPE_INT,
-    Setting::TYPE_DATA,
-    Setting::TYPE_STRING
-];
+use App\Containers\Vendor\Setting\Tests\UnitTestCase;
 
-return [
-
-    'rules' => [
-
-        'key' => [
-            'string',
-            'unique:' . Setting::TABLE . ',key'
-        ],
-
-        'type' => [
-            'in:' . implode(',', $allowedTypes)
-        ]
-
-    ]
-
-];
+abstract class ApiTestCase extends UnitTestCase
+{
+}

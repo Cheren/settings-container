@@ -13,13 +13,13 @@
  * @author      Sergey Kalistratov <sergey@kalistratov.ru>
  */
 
-namespace App\Containers\Vendor\Settings\Tests\Unit\Actions;
+namespace App\Containers\Vendor\Setting\Tests\Unit\Actions;
 
-use App\Containers\Vendor\Settings\Actions\GetSystemSettingsAction;
-use App\Containers\Vendor\Settings\Tests\TestCase;
+use App\Containers\Vendor\Setting\Actions\GetSystemSettingsAction;
+use App\Containers\Vendor\Setting\Tests\UnitTestCase;
 use Illuminate\Database\Eloquent\Collection;
 
-class GetSystemSettingsTest extends TestCase
+final class GetSystemSettingsTest extends UnitTestCase
 {
     public function test(): void
     {

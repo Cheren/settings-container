@@ -12,11 +12,13 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Requests;
+namespace App\Containers\Vendor\Setting\Requests;
 
-use App\Containers\Vendor\Settings\Permissions\Permissions;
-use App\Containers\Vendor\Settings\Models\Setting;
-use App\Containers\Vendor\Settings\UI\API\Transformers\SettingTransformer;
+use App\Containers\Vendor\Setting\Foundation\Setting;
+use App\Containers\Vendor\Setting\Models\Setting as SettingModel;
+use App\Containers\Vendor\Setting\Traits\SettingValidationRules;
+use App\Containers\Vendor\Setting\UI\API\Transformers\AdminSettingTransformer;
+use App\Containers\Vendor\Setting\UI\API\Transformers\SettingTransformer;
 use App\Ship\Contracts\GettableTransformer;
 use App\Ship\Parents\Transformers\Transformer;
 use App\Ship\Requests\ApiRequest;
@@ -26,26 +28,11 @@ use App\Ship\Requests\ApiRequest;
  */
 abstract class ApiSettingRequest extends ApiRequest implements GettableTransformer
 {
-    protected array $access = [
-        //'permissions' => SettingsPermissions::MANAGE_SETTINGS,
-        'roles' => 'admin'
-    ];
-
-    public function authorize(): bool
-    {
-        return $this->check([
-            'hasAccess'
-        ]);
-    }
+    use SettingValidationRules;
 
     public function getTransformer(): Transformer
     {
-        return new SettingTransformer();
-    }
-
-    protected function inputTypeIs(string $type): bool
-    {
-        return $this->get('type') === $type;
+        return $this->isAdminUser() ? new AdminSettingTransformer() : new SettingTransformer();
     }
 
     protected function isOwner(): bool
@@ -54,10 +41,19 @@ abstract class ApiSettingRequest extends ApiRequest implements GettableTransform
             return true;
         }
 
-        $count = Setting::where('created_by', $this->user()->id)
-            ->where('key', $this->get('key', $this->key))
-            ->count();
+        return $this->countForOwner() > ZERO;
+    }
 
-        return $count > 0;
+    protected function isUserScreenSettings(): bool
+    {
+        $key = $this->get(Setting::KEY);
+        return (bool)preg_match('/^user\.#[0-9]\.screen\.[0-9a-z_]/', $key);
+    }
+
+    protected function countForOwner(): int
+    {
+        return SettingModel::where(CREATED_BY, $this->user()->id)
+            ->where(Setting::KEY, $this->get(Setting::KEY, $this->key))
+            ->count();
     }
 }

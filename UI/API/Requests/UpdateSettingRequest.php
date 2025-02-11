@@ -12,20 +12,17 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\UI\API\Requests;
+namespace App\Containers\Vendor\Setting\UI\API\Requests;
 
-use App\Containers\Vendor\Settings\Models\Setting;
-use App\Ship\Parents\Validation\Rule;
+use App\Containers\Vendor\Setting\Foundation\Setting;
+use Illuminate\Validation\Rules\Unique;
 
 class UpdateSettingRequest extends CreateSettingRequest
 {
     public function authorize(): bool
     {
         if ($this->isUserScreenSettings()) {
-            $this->access = [
-                'permissions' => '',
-                'roles' => ''
-            ];
+            $this->clearAccess();
         }
 
         return $this->check([
@@ -34,15 +31,9 @@ class UpdateSettingRequest extends CreateSettingRequest
         ]);
     }
 
-    protected function getKeyRules(): array
+    public function getSettingUniqueKeyValidationRule(): Unique
     {
-        $rules = parent::getKeyRules();
-        foreach ($rules as $i => $rule) {
-            if (preg_match('/^unique:/', $rule)) {
-                $rules[$i] = Rule::unique(Setting::TABLE, 'key')->ignore($this->key, 'key');
-            }
-        }
-
-        return $rules;
+        return parent::getSettingUniqueKeyValidationRule()
+            ->ignore($this->key, Setting::KEY);
     }
 }

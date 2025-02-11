@@ -12,11 +12,11 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Actions;
+namespace App\Containers\Vendor\Setting\Actions;
 
-use App\Containers\Vendor\Settings\Dto\SettingsDto;
-use App\Containers\Vendor\Settings\Models\Setting;
-use App\Containers\Vendor\Settings\Tasks\CreateSettingTask;
+use App\Containers\Vendor\Setting\Dto\SettingsDto;
+use App\Containers\Vendor\Setting\Models\Setting;
+use App\Containers\Vendor\Setting\Tasks\CreateSettingTask;
 use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Parents\Actions\Action;
 

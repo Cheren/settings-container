@@ -12,17 +12,15 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Tasks;
+namespace App\Containers\Vendor\Setting\Tasks;
 
-use App\Containers\Vendor\Settings\Data\Repositories\SettingRepository;
+use App\Containers\Vendor\Setting\Data\Repositories\SettingRepository;
 use App\Ship\Parents\Tasks\Task;
 
 abstract class SettingTask extends Task
 {
-    protected SettingRepository $repository;
-
-    public function __construct(SettingRepository $repository)
-    {
-        $this->repository = $repository;
+    public function __construct(
+        protected SettingRepository $repository
+    ) {
     }
 }

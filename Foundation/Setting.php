@@ -13,15 +13,22 @@
  * @author      Sergey Kalistratov <sergey@kalistratov.ru>
  */
 
-namespace App\Containers\Vendor\Settings\Foundation;
+namespace App\Containers\Vendor\Setting\Foundation;
 
 use App\Ship\Foundation\SectionContainer;
 
-final class Settings extends SectionContainer
+final class Setting extends SectionContainer
 {
     public const KEY = 'key';
     public const TYPE = 'type';
+    public const TYPE_MAX_LENGTH = 10;
     public const VALUE = 'value';
+    public const SYSTEM = 'system';
 
     protected string $apiBaseUri = 'settings';
+
+    public function getApiSystemUri(): string
+    {
+        return $this->getApiUri(self::SYSTEM);
+    }
 }

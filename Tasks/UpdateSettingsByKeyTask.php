@@ -12,10 +12,11 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Tasks;
+namespace App\Containers\Vendor\Setting\Tasks;
 
-use App\Containers\Vendor\Settings\Dto\SettingsDto;
-use App\Containers\Vendor\Settings\Models\Setting;
+use App\Containers\Vendor\Setting\Dto\SettingsDto;
+use App\Containers\Vendor\Setting\Foundation\Setting;
+use App\Containers\Vendor\Setting\Models\Setting as SettingModel;
 use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Exceptions\UpdateResourceFailedException;
 use Exception;
@@ -24,18 +25,18 @@ class UpdateSettingsByKeyTask extends SettingTask
 {
     /**
      * @param SettingsDto $dto
-     * @return Setting
+     * @return SettingModel
      * @throws NotFoundException
      * @throws UpdateResourceFailedException
      */
-    public function run(SettingsDto $dto): Setting
+    public function run(SettingsDto $dto): SettingModel
     {
         $setting = $this->findSetting($dto->key);
 
         try {
             return $this->repository->update([
-                'value' => $dto->value,
-                'type' => $dto->type
+                Setting::VALUE => $dto->value,
+                Setting::TYPE => $dto->type
             ], $setting->id);
         } catch (Exception $exception) {
             throw new UpdateResourceFailedException();
@@ -44,12 +45,16 @@ class UpdateSettingsByKeyTask extends SettingTask
 
     /**
      * @param string $key
-     * @return Setting
+     * @return SettingModel
      * @throws NotFoundException
      */
-    protected function findSetting(string $key): Setting
+    protected function findSetting(string $key): SettingModel
     {
-        $setting = $this->repository->findWhere(['key' => $key])->first();
+        $setting = $this->repository
+            ->findWhere([
+                Setting::KEY => $key
+            ])
+            ->first();
 
         if (!$setting) {
             throw new NotFoundException();

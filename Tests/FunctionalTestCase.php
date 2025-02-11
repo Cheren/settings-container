@@ -10,21 +10,10 @@
  * @license    Proprietary
  * @copyright  Copyright (C) kalistratov.ru, All rights reserved.
  * @link       https://kalistratov.ru
- *
- * @apiDefine           SettingsSuccessSingleResponse
- * @apiSuccessExample   {json} Success-Response:
-HTTP/1.1 200 OK
-{
-    "data": {
-        "object": "Setting",
-        "id": "NxOpZowo9GmjKqdR",
-        "key": "user.#1.orders.table",
-        "value": "hello"
-    },
-    "meta": {
-        "include": [],
-        "custom": []
-    }
-}
  */
 
+namespace App\Containers\Vendor\Setting\Tests;
+
+abstract class FunctionalTestCase extends UnitTestCase
+{
+}

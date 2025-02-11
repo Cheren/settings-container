@@ -12,9 +12,9 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Tasks;
+namespace App\Containers\Vendor\Setting\Tasks;
 
-use App\Containers\Vendor\Settings\Data\Criterias\OrderByKeyAscendingCriteria;
+use App\Containers\Vendor\Setting\Data\Criterias\OrderByKeyAscendingCriteria;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Prettus\Repository\Exceptions\RepositoryException;
 

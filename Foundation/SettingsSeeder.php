@@ -13,10 +13,10 @@
  * @author      Sergey Kalistratov <sergey@kalistratov.ru>
  */
 
-namespace App\Containers\Vendor\Settings\Foundation;
+namespace App\Containers\Vendor\Setting\Foundation;
 
-use App\Containers\Vendor\Settings\Actions\CreateSettingAction;
-use App\Containers\Vendor\Settings\Schema;
+use App\Containers\Vendor\Setting\Actions\CreateSettingAction;
+use App\Containers\Vendor\Setting\Schema;
 use App\Ship\Parents\Seeders\Seeder;
 use App\Ship\Exceptions\CreateResourceFailedException;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;

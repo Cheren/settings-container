@@ -12,9 +12,9 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Actions;
+namespace App\Containers\Vendor\Setting\Actions;
 
-use App\Containers\Vendor\Settings\Tasks\FindSettingByKeyTask;
+use App\Containers\Vendor\Setting\Tasks\FindSettingByKeyTask;
 use App\Ship\Parents\Actions\Action;
 use JBZoo\Data\JSON;
 use App\Ship\Exceptions\NotFoundException;

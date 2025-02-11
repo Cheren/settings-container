@@ -11,19 +11,18 @@
  * @copyright  Copyright (C) kalistratov.ru, All rights reserved.
  * @link       https://kalistratov.ru
  *
- * @apiGroup           Settings
- * @apiName            createSetting
- * @apiUse             SettingsSuccessSingleResponse
+ * @apiGroup Setting
+ * @apiName createSetting
  *
- * @api                {POST} /v1/settings Создать
- * @apiDescription     Создание новой настройки.
+ * @api {post} /v1/settings Создать
+ * @apiDescription Создание новой настройки.
  *
- * @apiVersion         1.0.0
- * @apiPermission      Аутентифицированный пользователь с правами "crud-settings"
+ * @apiVersion 1.0.0
+ * @apiPermission Аутентифицированный пользователь с правами "crud-settings"
  *
- * @apiParam           {String} key Уникальный ключ
- * @apiParam           {String|Int|Array} value Значение
- * @apiParam           {String=string,int,data} type=string Тип хранения настройки
+ * @apiBody {String} key Уникальный ключ
+ * @apiBody {String|Int|Array} value Значение
+ * @apiBody {String=string,int,data} type=string Тип хранения настройки
  *
  * @apiExample {js} NodeJS Axios (String TYPE):
 const axios = require('axios');
@@ -71,11 +70,14 @@ let config = {
 };
 
 axios(config);
+ *
+ * @apiUse SettingsSuccessSingleResponse
  */
 
-use App\Containers\Vendor\Settings\UI\API\Controllers\Controller;
+use App\Containers\Vendor\Setting\Facades\Container;
+use App\Containers\Vendor\Setting\UI\API\Controllers\CreateSettingController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('settings', [Controller::class, 'createSetting'])
+Route::post(Container::getApiUri(), CreateSettingController::class)
     ->name('api_settings_create_setting')
     ->middleware(['auth:api']);

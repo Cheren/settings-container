@@ -12,9 +12,11 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Models;
+namespace App\Containers\Vendor\Setting\Models;
 
-use App\Containers\Vendor\Settings\Data\Factories\SettingFactory;
+use Apiato\Core\Contracts\HasResourceKey;
+use App\Containers\Vendor\Setting\Data\Factories\SettingFactory;
+use App\Containers\Vendor\Setting\Foundation\Setting as BaseSetting;
 use App\Ship\Database\Eloquent\Concerns\HasCreatedBy;
 use App\Ship\Parents\Models\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,19 +24,20 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use JBZoo\Data\JSON as JsonData;
 
 /**
- * @property int $id
- * @property null|int $created_by
- * @property string $key
- * @property string|int|JsonData $value
- * @property string $type
+ * @property int $id Уникальный идентификатор.
+ * @property string $key Уникальный ключ.
+ * @property string|int|JsonData $value Установленные значения.
+ * @property string $type Тип.
+ * @property null|int $created_by Уникальный идентификатор пользователя которы создал.
  *
  * @method static Factory|SettingFactory factory(...$parameters)
  */
-class Setting extends Model
+class Setting extends Model implements HasResourceKey
 {
     use HasCreatedBy;
 
     public const TABLE = 'settings';
+    public const RESOURCE_KEY = 'Setting';
     public const TYPE_STRING = 'string';
     public const TYPE_INT = 'int';
     public const TYPE_DATA = 'data';
@@ -42,26 +45,28 @@ class Setting extends Model
     public $timestamps = false;
 
     protected $table = self::TABLE;
+    protected string $resourceKey = self::RESOURCE_KEY;
 
     protected $fillable = [
-        'key',
-        'value',
-        'type'
+        BaseSetting::KEY,
+        BaseSetting::VALUE,
+        BaseSetting::TYPE
     ];
+
 
     /**
      * @param mixed $value
      * @return int|JsonData|string
      */
-    public function getValueAttribute($value)
+    public function getValueAttribute(mixed $value): int|JsonData|string
     {
         if ($this->isType(self::TYPE_DATA)) {
             return new JsonData($value);
         } elseif ($this->isType(self::TYPE_INT)) {
-            return (int) $value;
+            return (int)$value;
         }
 
-        return (string) $value;
+        return (string)$value;
     }
 
     public function setValueAttribute($value): void
@@ -70,7 +75,7 @@ class Setting extends Model
             $value = (new JsonData($value))->write();
         }
 
-        $this->attributes['value'] = $value;
+        $this->attributes[BaseSetting::VALUE] = $value;
     }
 
     public function isType(string $type): bool
@@ -78,7 +83,7 @@ class Setting extends Model
         return $this->type === $type;
     }
 
-    protected function performInsert(Builder $query)
+    protected function performInsert(Builder $query): bool
     {
         $this->updateCreatedBy();
         return parent::performInsert($query);

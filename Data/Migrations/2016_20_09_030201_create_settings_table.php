@@ -13,26 +13,27 @@
  */
 
 use App\Containers\AppSection\User\Models\User;
-use App\Containers\Vendor\Settings\Models\Setting;
+use App\Containers\Vendor\Setting\Foundation\Setting;
+use App\Containers\Vendor\Setting\Models\Setting as SettingModel;
 use App\Ship\Database\Migrations\CreateSchemaTable;
 use App\Ship\Database\Migrations\CreateTableMigration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateSettingsTable extends CreateTableMigration
+final class CreateSettingsTable extends CreateTableMigration
 {
     public function addTableColumns(Blueprint $table): CreateSchemaTable
     {
         $table->id();
 
-        $table->string('key')
+        $table->string(Setting::KEY)
             ->unique();
 
-        $table->text('value');
+        $table->text(Setting::VALUE);
 
-        $table->string('type', 10)
-            ->default(Setting::TYPE_STRING);
+        $table->string(Setting::TYPE, Setting::TYPE_MAX_LENGTH)
+            ->default(SettingModel::TYPE_STRING);
 
-        $table->unsignedBigInteger('created_by')
+        $table->unsignedBigInteger(CREATED_BY)
             ->nullable();
 
         return $this;
@@ -40,21 +41,21 @@ class CreateSettingsTable extends CreateTableMigration
 
     public function addTableColumnsForeign(Blueprint $table): CreateSchemaTable
     {
-        $table->foreign('created_by', 'setting_created_by_fk')
+        $table->foreign(CREATED_BY, $this->getFieldForeignKeyName(CREATED_BY))
             ->on(User::TABLE)
-            ->references('id');
+            ->references(ID);
 
         return $this;
     }
 
     public function addTableColumnsIndex(Blueprint $table): CreateSchemaTable
     {
-        $table->index('key', 'setting_key_index');
+        $table->index(Setting::KEY, $this->getFieldIndexName(Setting::KEY));
         return $this;
     }
 
     public function getTableName(): string
     {
-        return Setting::TABLE;
+        return SettingModel::TABLE;
     }
 }

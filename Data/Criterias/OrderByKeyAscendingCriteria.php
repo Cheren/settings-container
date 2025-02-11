@@ -12,8 +12,9 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Data\Criterias;
+namespace App\Containers\Vendor\Setting\Data\Criterias;
 
+use App\Containers\Vendor\Setting\Foundation\Setting;
 use App\Ship\Parents\Criterias\Criteria;
 use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterface;
@@ -28,6 +29,6 @@ final class OrderByKeyAscendingCriteria extends Criteria
      */
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        return $model->orderBy('key', 'asc');
+        return $model->orderBy(Setting::KEY);
     }
 }

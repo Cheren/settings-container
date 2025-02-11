@@ -12,20 +12,21 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Data\Repositories;
+namespace App\Containers\Vendor\Setting\Data\Repositories;
 
-use App\Containers\Vendor\Settings\Models\Setting;
+use App\Containers\Vendor\Setting\Foundation\Setting;
+use App\Containers\Vendor\Setting\Models\Setting as SettingModel;
 use App\Ship\Parents\Repositories\Repository;
 
-class SettingRepository extends Repository
+final class SettingRepository extends Repository
 {
     protected $fieldSearchable = [
-        'id' => '=',
-        'key' => '='
+        ID => '=',
+        Setting::KEY => '='
     ];
 
     public function model(): string
     {
-        return Setting::class;
+        return SettingModel::class;
     }
 }

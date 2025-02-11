@@ -11,22 +11,26 @@
  * @copyright  Copyright (C) kalistratov.ru, All rights reserved.
  * @link       https://kalistratov.ru
  *
- * @apiGroup           Settings
- * @apiName            deleteSetting
+ * @apiGroup Setting
+ * @apiName deleteSetting
  *
- * @api                {DELETE} /v1/settings/:key Удалить
- * @apiDescription     Удалить сохранённые настройки по ключу.
+ * @api {delete} /v1/settings/:key Удалить
+ * @apiDescription Удалить сохранённые настройки по ключу.
  *
- * @apiVersion         1.0.0
- * @apiPermission      Аутентифицированный пользователь с правами "crud-settings"
+ * @apiVersion 1.0.0
+ * @apiPermission Аутентифицированный пользователь с правами "crud-settings"
  *
- * @apiSuccessExample  {json}  Success-Response:
+ * @apiParam {String} key Уникальный ключ
+ * 
+ * @apiSuccessExample {json} Успешный ответ:
  * HTTP/1.1 204 No content
  */
 
-use App\Containers\Vendor\Settings\UI\API\Controllers\Controller;
+use App\Containers\Vendor\Setting\Facades\Container;
+use App\Containers\Vendor\Setting\Foundation\Setting;
+use App\Containers\Vendor\Setting\UI\API\Controllers\DeleteSettingController;
 use Illuminate\Support\Facades\Route;
 
-Route::delete('settings/{key}', [Controller::class, 'deleteSetting'])
+Route::delete(Container::getApiUri('{' . Setting::KEY . '}'), DeleteSettingController::class)
     ->name('api_settings_delete_setting')
     ->middleware(['auth:api']);

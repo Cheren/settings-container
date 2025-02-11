@@ -12,37 +12,38 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Tests\Unit\Actions;
+namespace App\Containers\Vendor\Setting\Tests\Unit\Actions;
 
-use App\Containers\Vendor\Settings\Actions\UpdateSettingByKeyAction;
-use App\Containers\Vendor\Settings\Dto\SettingsDto;
-use App\Containers\Vendor\Settings\Models\Setting;
-use App\Containers\Vendor\Settings\Tests\TestCase;
+use App\Containers\Vendor\Setting\Actions\UpdateSettingByKeyAction;
+use App\Containers\Vendor\Setting\Dto\SettingsDto;
+use App\Containers\Vendor\Setting\Foundation\Setting;
+use App\Containers\Vendor\Setting\Models\Setting as SettingModel;
+use App\Containers\Vendor\Setting\Tests\UnitTestCase;
 use App\Ship\Exceptions\NotFoundException;
 
-class UpdateSettingByKeyActionTest extends TestCase
+final class UpdateSettingByKeyActionTest extends UnitTestCase
 {
     public function testSuccessUpdate(): void
     {
-        $settings = Setting::factory()->create([
-            'key' => 'user.1.items',
-            'value' => [
+        $settings = SettingModel::factory()->create([
+            Setting::KEY => 'user.1.items',
+            Setting::VALUE => [
                 'total' => 10
             ],
-            'type' => Setting::TYPE_DATA
+            Setting::TYPE => SettingModel::TYPE_DATA
         ]);
 
         $dto = new SettingsDto([
-            'key' => $settings->key,
-            'value' => [
+            Setting::KEY => $settings->key,
+            Setting::VALUE => [
                 'total' => 22
             ],
-            'type' => Setting::TYPE_DATA
+            Setting::TYPE => SettingModel::TYPE_DATA
         ]);
 
         $result = app(UpdateSettingByKeyAction::class)->run($dto);
-        $this->assertInstanceOf(Setting::class, $result);
-        $this->assertSame(22, (int) $result->value->get('total'));
+        $this->assertInstanceOf(SettingModel::class, $result);
+        $this->assertSame(22, (int)$result->value->get('total'));
     }
 
     public function testInvalidUpdate(): void
@@ -50,8 +51,8 @@ class UpdateSettingByKeyActionTest extends TestCase
         $this->expectException(NotFoundException::class);
 
         $dto = new SettingsDto([
-            'key' => 'page',
-            'value' => 10
+            Setting::KEY => 'page',
+            Setting::VALUE => 10
         ]);
 
         app(UpdateSettingByKeyAction::class)->run($dto);

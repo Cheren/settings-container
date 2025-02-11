@@ -13,10 +13,10 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\UI\API\Requests;
+namespace App\Containers\Vendor\Setting\UI\API\Requests;
 
-use App\Containers\Vendor\Settings\Requests\ApiSettingRequest;
-use App\Containers\Vendor\Settings\UI\API\Transformers\SystemSettingsTransformer;
+use App\Containers\Vendor\Setting\Requests\ApiSettingRequest;
+use App\Containers\Vendor\Setting\UI\API\Transformers\SystemSettingsTransformer;
 use App\Ship\Parents\Transformers\Transformer;
 
 class GetSystemSettingsRequest extends ApiSettingRequest

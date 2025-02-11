@@ -12,22 +12,32 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\UI\API\Requests;
+namespace App\Containers\Vendor\Setting\UI\API\Requests;
 
-use App\Containers\Vendor\Settings\Models\Setting;
-use App\Containers\Vendor\Settings\Requests\ApiSettingRequest;
+use App\Containers\Vendor\Setting\Foundation\Setting;
+use App\Containers\Vendor\Setting\Requests\ApiSettingRequest;
+use App\Ship\Collections\ValidationRules;
 
 class DeleteSettingRequest extends ApiSettingRequest
 {
     protected array $urlParameters = [
-        'key'
+        Setting::KEY
     ];
 
     public function rules(): array
     {
         return [
-            'key' => 'exists:' . Setting::TABLE . ',key'
+            Setting::KEY => $this->getSettingKeyValidationRules()
         ];
+    }
+
+    public function getSettingKeyValidationRules(): ValidationRules
+    {
+        return validation_rules()
+            ->addRequired()
+            ->add(
+                $this->getSettingExistsByKeyValidationRule()
+            );
     }
 
     public function authorize(): bool

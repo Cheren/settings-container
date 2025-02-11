@@ -12,26 +12,30 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Data\Factories;
+namespace App\Containers\Vendor\Setting\Data\Factories;
 
-use App\Containers\Vendor\Settings\Models\Setting;
+use App\Containers\Vendor\Setting\Foundation\Setting;
+use App\Containers\Vendor\Setting\Models\Setting as SettingModel;
+use App\Ship\Database\Eloquent\Collection;
 use App\Ship\Parents\Factories\Factory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Collection;
+use App\Ship\Parents\Models\Model;
+use App\Ship\Traits\Factory\CreatedByState;
 
 /**
- * @method Model|Collection|Setting create($attributes = [], ?Model $parent = null)
+ * @method Model|Collection|SettingModel create($attributes = [], ?Model $parent = null)
  */
-class SettingFactory extends Factory
+final class SettingFactory extends Factory
 {
-    protected $model = Setting::class;
+    use CreatedByState;
 
-    public function definition()
+    protected $model = SettingModel::class;
+
+    public function definition(): array
     {
         return [
-            'key' => $this->faker->slug,
-            'value' => $this->faker->name,
-            'type' => Setting::TYPE_STRING
+            Setting::KEY => $this->faker->slug,
+            Setting::VALUE => $this->faker->name,
+            Setting::TYPE => SettingModel::TYPE_STRING
         ];
     }
 }

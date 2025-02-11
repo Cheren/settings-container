@@ -12,7 +12,7 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings;
+namespace App\Containers\Vendor\Setting;
 
 use Apiato\Core\Foundation\Facades\Apiato;
 use App\Ship\Foundation\AbstractManager;
@@ -25,7 +25,7 @@ use Symfony\Component\Finder\Finder;
  */
 final class Manager extends AbstractManager
 {
-    public const PREFIX = 'Settings';
+    public const PREFIX = 'Setting';
 
     public function getItemAccessor(): string
     {

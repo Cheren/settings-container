@@ -13,15 +13,18 @@
  * @author      Sergey Kalistratov <sergey@kalistratov.ru>
  */
 
-namespace App\Containers\Vendor\Settings\Facades;
+namespace App\Containers\Vendor\Setting\Facades;
 
-use App\Containers\Vendor\Settings\Foundation\Settings;
+use App\Containers\Vendor\Setting\Foundation\Setting;
 use App\Ship\Facades\SectionContainerFacade;
 
+/**
+ * @method static string getApiSystemUri()
+ */
 final class Container extends SectionContainerFacade
 {
     protected static function getFacadeAccessor(): string
     {
-        return Settings::class;
+        return Setting::class;
     }
 }

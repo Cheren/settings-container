@@ -11,14 +11,14 @@
  * @copyright  Copyright (C) kalistratov.ru, All rights reserved.
  * @link       https://kalistratov.ru
  *
- * @apiGroup           Settings
- * @apiName            getAllSettings
+ * @apiGroup Setting
+ * @apiName getAllSettings
  *
- * @api                {GET} /v1/settings Список
- * @apiDescription     Получить всесь список настроек.
+ * @api {get} /v1/settings Список
+ * @apiDescription Получить всесь список настроек.
  *
- * @apiVersion         1.0.0
- * @apiPermission      Аутентифицированный пользователь с правами "crud-settings"
+ * @apiVersion 1.0.0
+ * @apiPermission Аутентифицированный пользователь с правами "crud-settings"
  *
  * @apiExample {js} NodeJS Axios:
 const axios = require('axios');
@@ -36,7 +36,7 @@ let config = {
  *
 axios(config);
  *
- * @apiSuccessExample  {json}  Success-Response:
+ * @apiSuccessExample {json} Успешный ответ:
  * HTTP/1.1 200 OK
 {
     "data": [
@@ -71,9 +71,10 @@ axios(config);
 }
  */
 
-use App\Containers\Vendor\Settings\UI\API\Controllers\Controller;
+use App\Containers\Vendor\Setting\Facades\Container;
+use App\Containers\Vendor\Setting\UI\API\Controllers\GetAllSettingsController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('settings', [Controller::class, 'getAllSettings'])
+Route::get(Container::getApiUri(), GetAllSettingsController::class)
     ->name('api_settings_get_all_settings')
     ->middleware(['auth:api']);

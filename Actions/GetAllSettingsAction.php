@@ -12,10 +12,10 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Actions;
+namespace App\Containers\Vendor\Setting\Actions;
 
 use Apiato\Core\Exceptions\CoreInternalErrorException;
-use App\Containers\Vendor\Settings\Tasks\GetAllSettingsTask;
+use App\Containers\Vendor\Setting\Tasks\GetAllSettingsTask;
 use App\Ship\Parents\Actions\Action;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Prettus\Repository\Exceptions\RepositoryException;

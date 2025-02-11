@@ -12,20 +12,21 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Tests\Unit\Models;
+namespace App\Containers\Vendor\Setting\Tests\Unit\Models;
 
-use App\Containers\Vendor\Settings\Models\Setting;
-use App\Containers\Vendor\Settings\Tests\TestCase;
+use App\Containers\Vendor\Setting\Foundation\Setting;
+use App\Containers\Vendor\Setting\Models\Setting as SettingModel;
+use App\Containers\Vendor\Setting\Tests\UnitTestCase;
+use JBZoo\Data\JSON;
 
-/**
- * @property Setting $model
- */
-class SettingTest extends TestCase
+final class SettingTest extends UnitTestCase
 {
+    protected SettingModel $model;
+
     public function setUp(): void
     {
         parent::setUp();
-        $this->model = new Setting();
+        $this->model = new SettingModel();
     }
 
     public function testTimestamps(): void
@@ -36,13 +37,37 @@ class SettingTest extends TestCase
     public function testFillabel(): void
     {
         $fields = [
-            'key',
-            'value',
-            'type'
+            Setting::KEY,
+            Setting::VALUE,
+            Setting::TYPE
         ];
 
         foreach ($fields as $field) {
             $this->assertTrue(in_array($field, $this->model->getFillable()));
         }
+    }
+
+    public function testGetAttributeIsIntType(): void
+    {
+        $model = new SettingModel([
+            Setting::TYPE => SettingModel::TYPE_INT,
+            Setting::VALUE => '4567'
+        ]);
+
+        $this->assertIsInt($model->value);
+        $this->assertSame(4567, $model->value);
+    }
+
+    public function testGetAttributeIsDataType(): void
+    {
+        $model = new SettingModel([
+            Setting::TYPE => SettingModel::TYPE_DATA,
+            Setting::VALUE => [
+                'key' => 'value'
+            ]
+        ]);
+
+        $this->assertInstanceOf(JSON::class, $model->value);
+        $this->assertSame('value', $model->value->get('key'));
     }
 }

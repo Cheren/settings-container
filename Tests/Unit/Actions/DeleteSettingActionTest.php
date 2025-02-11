@@ -12,25 +12,28 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Tests\Unit\Actions;
+namespace App\Containers\Vendor\Setting\Tests\Unit\Actions;
 
-use App\Containers\Vendor\Settings\Actions\DeleteSettingAction;
-use App\Containers\Vendor\Settings\Models\Setting;
-use App\Containers\Vendor\Settings\Tests\TestCase;
+use App\Containers\Vendor\Setting\Actions\DeleteSettingAction;
+use App\Containers\Vendor\Setting\Foundation\Setting;
+use App\Containers\Vendor\Setting\Models\Setting as SettingModel;
+use App\Containers\Vendor\Setting\Tests\UnitTestCase;
 
-class DeleteSettingActionTest extends TestCase
+final class DeleteSettingActionTest extends UnitTestCase
 {
     public function testSuccess(): void
     {
-        $settings = Setting::factory()->create();
+        $settings = SettingModel::factory()->create();
+
         $this->assertSame(1, app(DeleteSettingAction::class)->run($settings->key));
-        $this->assertDatabaseMissing(Setting::TABLE, [
-            'key' => $settings->key
+
+        $this->assertDatabaseMissing(SettingModel::TABLE, [
+            Setting::KEY => $settings->key
         ]);
     }
 
     public function testInvalidKey(): void
     {
-        $this->assertSame(0, app(DeleteSettingAction::class)->run('custom-key'));
+        $this->assertSame(ZERO, app(DeleteSettingAction::class)->run('custom-key'));
     }
 }

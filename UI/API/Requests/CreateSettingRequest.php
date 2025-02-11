@@ -12,21 +12,22 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\UI\API\Requests;
+namespace App\Containers\Vendor\Setting\UI\API\Requests;
 
-use App\Containers\Vendor\Settings\Models\Setting;
-use App\Containers\Vendor\Settings\Requests\ApiSettingRequest;
-use App\Ship\Parents\Validation\Rule;
+use App\Containers\Vendor\Setting\Dto\SettingsDto;
+use App\Containers\Vendor\Setting\Foundation\Setting;
+use App\Containers\Vendor\Setting\Models\Setting as SettingModel;
+use App\Containers\Vendor\Setting\Requests\ApiSettingRequest;
+use App\Ship\Collections\ValidationRules;
+use App\Ship\Contracts\GettableDto;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
-class CreateSettingRequest extends ApiSettingRequest
+class CreateSettingRequest extends ApiSettingRequest implements GettableDto
 {
     public function authorize(): bool
     {
         if ($this->isUserScreenSettings()) {
-            $this->access = [
-                'permissions' => '',
-                'roles' => ''
-            ];
+            $this->clearAccess();
         }
 
         return parent::authorize();
@@ -35,43 +36,52 @@ class CreateSettingRequest extends ApiSettingRequest
     public function rules(): array
     {
         return [
-            'key' => $this->getKeyRules(),
-            'value' => $this->getValueRule(),
-            'type' => config('vendor-settings.rules.type')
+            Setting::KEY => $this->getSettingKeyValidationRules(),
+            Setting::VALUE => $this->getSettingValueValidationRules(),
+            Setting::TYPE => $this->getSettingTypeValidationRules()
         ];
     }
 
-    protected function isUserScreenSettings(): bool
+    /**
+     * @return SettingsDto
+     * @throws UnknownProperties
+     */
+    public function getDto(): SettingsDto
     {
-        $key = $this->get('key');
-        return (bool)preg_match('/^user\.#[0-9]\.screen\.[0-9a-z_]/', $key);
+        return $this->newDto($this->validated());
     }
 
-    protected function getKeyRules(): array
+    /**
+     * @param array $data
+     * @return SettingsDto
+     * @throws UnknownProperties
+     */
+    public function newDto(array $data = []): SettingsDto
     {
-        return Rule::addRequiredRule(config('vendor-settings.rules.key'));
+        return new SettingsDto($data);
     }
 
-    protected function getValueRule(): array
+    public function getSettingKeyValidationRules(): ValidationRules
     {
-        $rules = Rule::addRequiredRule([]);
+        return parent::getSettingKeyValidationRules()->addRequired();
+    }
 
-        if ($this->inputTypeIs(Setting::TYPE_DATA)) {
-            $rules[] = 'array';
-        } elseif ($this->inputTypeIs(Setting::TYPE_INT)) {
-            $rules[] = 'numeric';
-        } else {
-            $rules[] = 'string';
-        }
-
-        return $rules;
+    public function getSettingValueValidationRules(): ValidationRules
+    {
+        return validation_rules()
+            ->addRequired()
+            ->add(
+                $this->getSettingValueByTypeValidationRule(
+                    $this->get(Setting::TYPE)
+                )
+            );
     }
 
     protected function prepareForValidation(): void
     {
-        if (!$this->has('type')) {
+        if (!$this->has(Setting::TYPE)) {
             $this->merge([
-                'type' => Setting::TYPE_STRING
+                Setting::TYPE => SettingModel::TYPE_STRING
             ]);
         }
     }

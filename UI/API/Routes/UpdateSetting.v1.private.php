@@ -11,19 +11,19 @@
  * @copyright  Copyright (C) kalistratov.ru, All rights reserved.
  * @link       https://kalistratov.ru
  *
- * @apiGroup           Settings
- * @apiName            updateSetting
- * @apiUse             SettingsSuccessSingleResponse
+ * @apiGroup Setting
+ * @apiName updateSetting
+ * @apiUse SettingsSuccessSingleResponse
  *
- * @api                {POST} /v1/settings Обновить
- * @apiDescription     Обновить данные настройки.
+ * @api {patch} /v1/settings Обновить
+ * @apiDescription Обновить данные настройки.
  *
- * @apiVersion         1.0.0
- * @apiPermission      Аутентифицированный пользователь с правами "crud-settings"
+ * @apiVersion 1.0.0
+ * @apiPermission Аутентифицированный пользователь
  *
- * @apiParam           {String} key Уникальный ключ
- * @apiParam           {String|Int|Array} value Значение
- * @apiParam           {String=string,int,data} type=string Тип хранения настройки
+ * @apiBody {String} key Уникальный ключ
+ * @apiBody {String|Int|Array} value Значение
+ * @apiBody {String=string,int,data} type=string Тип хранения настройки
  *
  * @apiExample {js} NodeJS Axios (String TYPE):
 const axios = require('axios');
@@ -73,9 +73,10 @@ let config = {
 axios(config);
  */
 
-use App\Containers\Vendor\Settings\UI\API\Controllers\Controller;
+use App\Containers\Vendor\Setting\Facades\Container;
+use App\Containers\Vendor\Setting\UI\API\Controllers\UpdateSettingController;
 use Illuminate\Support\Facades\Route;
 
-Route::patch('settings', [Controller::class, 'updateSetting'])
+Route::patch(Container::getApiUri(), UpdateSettingController::class)
     ->name('api_settings_update_setting')
     ->middleware(['auth:api']);

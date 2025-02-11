@@ -12,9 +12,9 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Dto;
+namespace App\Containers\Vendor\Setting\Dto;
 
-use App\Containers\Vendor\Settings\Models\Setting;
+use App\Containers\Vendor\Setting\Models\Setting;
 use App\Ship\Parents\Dto\Dto;
 
 class SettingsDto extends Dto

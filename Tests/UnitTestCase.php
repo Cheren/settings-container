@@ -12,10 +12,8 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Setting\UI\API\Requests;
+namespace App\Containers\Vendor\Setting\Tests;
 
-use App\Containers\Vendor\Setting\Requests\ApiSettingRequest;
-
-class GetAllSettingsRequest extends ApiSettingRequest
+abstract class UnitTestCase extends ContainerTestCase
 {
 }

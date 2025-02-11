@@ -13,9 +13,9 @@
  * @author      Sergey Kalistratov <sergey@kalistratov.ru>
  */
 
-namespace App\Containers\Vendor\Settings\Actions;
+namespace App\Containers\Vendor\Setting\Actions;
 
-use App\Containers\Vendor\Settings\Tasks\GetSystemSettingsTask;
+use App\Containers\Vendor\Setting\Tasks\GetSystemSettingsTask;
 use App\Ship\Parents\Actions\Action;
 use Illuminate\Database\Eloquent\Collection;
 use Prettus\Repository\Exceptions\RepositoryException;

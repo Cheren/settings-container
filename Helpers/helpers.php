@@ -12,7 +12,7 @@
  * @link       https://kalistratov.ru
  */
 
-use App\Containers\Vendor\Settings\Actions\FindSettingByKeyAction;
+use App\Containers\Vendor\Setting\Actions\FindSettingByKeyAction;
 use JBZoo\Data\JSON;
 
 if (!function_exists('settings')) {

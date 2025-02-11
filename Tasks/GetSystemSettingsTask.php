@@ -13,9 +13,9 @@
  * @author      Sergey Kalistratov <sergey@kalistratov.ru>
  */
 
-namespace App\Containers\Vendor\Settings\Tasks;
+namespace App\Containers\Vendor\Setting\Tasks;
 
-use App\Containers\Vendor\Settings\Data\Criterias\IsSystemSettingsCriteria;
+use App\Containers\Vendor\Setting\Data\Criterias\IsSystemSettingsCriteria;
 use Illuminate\Database\Eloquent\Collection;
 use Prettus\Repository\Exceptions\RepositoryException;
 

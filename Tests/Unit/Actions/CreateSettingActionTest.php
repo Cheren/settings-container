@@ -12,25 +12,27 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Tests\Unit\Actions;
+namespace App\Containers\Vendor\Setting\Tests\Unit\Actions;
 
-use App\Containers\Vendor\Settings\Actions\CreateSettingAction;
-use App\Containers\Vendor\Settings\Dto\SettingsDto;
-use App\Containers\Vendor\Settings\Models\Setting;
-use App\Containers\Vendor\Settings\Tests\TestCase;
+use App\Containers\Vendor\Setting\Actions\CreateSettingAction;
+use App\Containers\Vendor\Setting\Dto\SettingsDto;
+use App\Containers\Vendor\Setting\Foundation\Setting;
+use App\Containers\Vendor\Setting\Models\Setting as SettingModel;
+use App\Containers\Vendor\Setting\Tests\UnitTestCase;
 use JBZoo\Data\JSON;
 
-class CreateSettingActionTest extends TestCase
+final class CreateSettingActionTest extends UnitTestCase
 {
     public function testSuccessCreateStringValue(): void
     {
         $dto = new SettingsDto([
-            'key' => 'title',
-            'value' => 'Test title'
+            Setting::KEY => 'title',
+            Setting::VALUE => 'Test title'
         ]);
 
         $result = app(CreateSettingAction::class)->run($dto);
-        $this->assertInstanceOf(Setting::class, $result);
+
+        $this->assertInstanceOf(SettingModel::class, $result);
         $this->assertNull($result->group);
         $this->assertSame($dto->key, $result->key);
         $this->assertSame($dto->value, $result->value);
@@ -40,13 +42,14 @@ class CreateSettingActionTest extends TestCase
     public function testSuccessCreateIntValue(): void
     {
         $dto = new SettingsDto([
-            'key' => 'age',
-            'value' => '225',
-            'type' => Setting::TYPE_INT
+            Setting::KEY => 'age',
+            Setting::VALUE => '225',
+            Setting::TYPE => SettingModel::TYPE_INT
         ]);
 
         $result = app(CreateSettingAction::class)->run($dto);
-        $this->assertInstanceOf(Setting::class, $result);
+
+        $this->assertInstanceOf(SettingModel::class, $result);
         $this->assertNull($result->group);
         $this->assertSame($dto->key, $result->key);
         $this->assertSame(225, $result->value);
@@ -58,16 +61,17 @@ class CreateSettingActionTest extends TestCase
         $user = $this->getTestingUser();
 
         $dto = new SettingsDto([
-            'key' => 'age',
-            'value' => [
+            Setting::KEY => 'age',
+            Setting::VALUE => [
                 'age' => '31',
                 'name' => 'Tester'
             ],
-            'type' => Setting::TYPE_DATA
+            Setting::TYPE => SettingModel::TYPE_DATA
         ]);
 
         $result = app(CreateSettingAction::class)->run($dto);
-        $this->assertInstanceOf(Setting::class, $result);
+
+        $this->assertInstanceOf(SettingModel::class, $result);
         $this->assertNull($result->group);
         $this->assertSame($dto->key, $result->key);
         $this->assertInstanceOf(JSON::class, $result->value);

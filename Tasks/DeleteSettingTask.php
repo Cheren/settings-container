@@ -12,8 +12,9 @@
  * @link       https://kalistratov.ru
  */
 
-namespace App\Containers\Vendor\Settings\Tasks;
+namespace App\Containers\Vendor\Setting\Tasks;
 
+use App\Containers\Vendor\Setting\Foundation\Setting;
 use App\Ship\Exceptions\DeleteResourceFailedException;
 use Exception;
 
@@ -28,7 +29,7 @@ class DeleteSettingTask extends SettingTask
     {
         try {
             return $this->repository->deleteWhere([
-                ['key', '=', $key]
+                [Setting::KEY, '=', $key]
             ]);
         } catch (Exception $exception) {
             throw new DeleteResourceFailedException($exception->getMessage());

@@ -14,20 +14,16 @@
 
 namespace App\Containers\Vendor\Setting\UI\API\Transformers;
 
-use App\Containers\Vendor\Setting\Foundation\Setting;
 use App\Containers\Vendor\Setting\Models\Setting as SettingModel;
-use App\Ship\Parents\Transformers\Transformer;
 
-class SettingTransformer extends Transformer
+final class AdminSettingTransformer extends SettingTransformer
 {
     public function transform(SettingModel $setting): array
     {
-        return [
-            OBJECT => 'Setting',
-            ID => $setting->getHashedKey(),
-            Setting::KEY => $setting->key,
-            Setting::TYPE => $setting->type,
-            Setting::VALUE => $setting->value
-        ];
+        return parent::transform($setting) +
+            [
+                $this->realKey(ID) => $setting->id,
+                $this->realKey(CREATED_BY) => $setting->created_by
+            ];
     }
 }
