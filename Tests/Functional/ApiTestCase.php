@@ -14,8 +14,8 @@
 
 namespace App\Containers\Vendor\Setting\Tests\Functional;
 
-use App\Containers\Vendor\Setting\Tests\UnitTestCase;
+use App\Containers\Vendor\Setting\Tests\FunctionalTestCase;
 
-abstract class ApiTestCase extends UnitTestCase
+abstract class ApiTestCase extends FunctionalTestCase
 {
 }
