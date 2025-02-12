@@ -35,7 +35,7 @@ final class CreateSettingTest extends ApiTestCase
             Setting::VALUE => 'test',
             Setting::TYPE => 'no-found'
         ]);
-dd(123);
+
         $this->assertGivenDataWasInvalid();
 
         $this->response->assertJson(
