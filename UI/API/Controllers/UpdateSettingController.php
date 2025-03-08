@@ -16,7 +16,6 @@ namespace App\Containers\Vendor\Setting\UI\API\Controllers;
 
 use Apiato\Core\Exceptions\InvalidTransformerException;
 use App\Containers\Vendor\Setting\Actions\UpdateSettingByKeyAction;
-use App\Containers\Vendor\Setting\Dto\SettingsDto;
 use App\Containers\Vendor\Setting\UI\API\Requests\UpdateSettingRequest;
 use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Exceptions\UpdateResourceFailedException;
@@ -34,13 +33,14 @@ class UpdateSettingController extends ApiController
      * @throws NotFoundException
      * @throws UnknownProperties
      * @throws UpdateResourceFailedException
-     * @throws \Apiato\Core\Exceptions\IncorrectIdException
-     * @throws \Throwable
      */
     public function __invoke(UpdateSettingRequest $request, UpdateSettingByKeyAction $action): JsonResponse
     {
-        $dto = new SettingsDto($request->all());
-        $setting = app(UpdateSettingByKeyAction::class)->run($dto);
-        return $this->created($this->transform($setting, $request->getTransformer()));
+        return $this->created(
+            $this->transform(
+                $action->run($request->getDto()),
+                $request->getTransformer()
+            )
+        );
     }
 }

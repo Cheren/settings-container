@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * APIATO setting container.
  *

@@ -21,7 +21,7 @@
  * @apiPermission Аутентифицированный пользователь с правами "crud-settings"
  *
  * @apiParam {String} key Уникальный ключ
- * 
+ *
  * @apiSuccessExample {json} Успешный ответ:
  * HTTP/1.1 204 No content
  */

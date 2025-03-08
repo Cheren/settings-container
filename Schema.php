@@ -65,10 +65,12 @@ abstract class Schema implements Namebled
      */
     public function get(?string $key = null, mixed $default = null): mixed
     {
-        static $settings;
-        if (is_null($settings)) {
-            $settings = settings($this->getKey(), new JSON());
+        static $settingList = [];
+        if (!isset($settingList[$this->getKey()])) {
+            $settingList[$this->getKey()] = settings($this->getKey(), new JSON());
         }
+
+        $settings = $settingList[$this->getKey()];
 
         return is_null($key) ? $settings : $settings->find($key, $default);
     }

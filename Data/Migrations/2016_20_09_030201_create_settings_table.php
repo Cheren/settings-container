@@ -19,7 +19,7 @@ use App\Ship\Database\Migrations\CreateSchemaTable;
 use App\Ship\Database\Migrations\CreateTableMigration;
 use Illuminate\Database\Schema\Blueprint;
 
-final class CreateSettingsTable extends CreateTableMigration
+return new class extends CreateTableMigration
 {
     public function addTableColumns(Blueprint $table): CreateSchemaTable
     {
@@ -58,4 +58,4 @@ final class CreateSettingsTable extends CreateTableMigration
     {
         return SettingModel::TABLE;
     }
-}
+};
