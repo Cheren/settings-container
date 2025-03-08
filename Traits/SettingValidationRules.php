@@ -17,7 +17,7 @@ namespace App\Containers\Vendor\Setting\Traits;
 use App\Containers\Vendor\Setting\Foundation\Setting;
 use App\Containers\Vendor\Setting\Models\Setting as SettingModel;
 use App\Ship\Collections\ValidationRules;
-use App\Ship\Parents\Validation\Rule;
+use App\Ship\Validation\Rule;
 use Illuminate\Validation\Rules\Exists;
 use Illuminate\Validation\Rules\In;
 use Illuminate\Validation\Rules\Unique;
