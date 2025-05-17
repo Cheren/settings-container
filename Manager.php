@@ -25,7 +25,7 @@ use Symfony\Component\Finder\Finder;
  */
 final class Manager extends AbstractManager
 {
-    public const PREFIX = 'Setting';
+    public const PREFIX = 'Settings';
 
     public function getItemAccessor(): string
     {
