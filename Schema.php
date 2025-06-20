@@ -25,6 +25,7 @@ abstract class Schema implements Namebled
     public const TYPE_SEPARATOR = 'separator';
     public const TYPE_INPUT = 'input';
     public const TYPE_LINK = 'link';
+    public const TYPE_BUTTON = 'button';
     public const TYPE_LIST = 'list';
     public const TYPE_DOUBLE_LIST = 'double_list';
 
